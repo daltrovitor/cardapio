@@ -119,7 +119,8 @@ export default function AdminDashboardPage() {
                 </div>
                 <button
                     onClick={fetchStats}
-                    className="flex items-center gap-2 px-4 py-2 bg-zinc-800 rounded-lg text-zinc-400 hover:text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors"
+                    style={{ backgroundColor: 'var(--menu-surface, #27272a)', color: settings?.primaryColor || '#f59e0b' }}
                 >
                     <FiRefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                     Atualizar
@@ -216,7 +217,7 @@ export default function AdminDashboardPage() {
             {/* Quick Actions Grid */}
             <div>
                 <h2 className="text-xl font-semibold mb-6 text-center" style={{ color: settings?.textColor || '#ffffff' }}>Acesso Rápido</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
                     {quickActions.map((action) => (
                         <Link
                             key={action.href}
@@ -273,18 +274,33 @@ export default function AdminDashboardPage() {
                         <h2 className="text-xl font-semibold mb-6 text-center" style={{ color: settings?.textColor || '#ffffff' }}>🔥 Pratos Mais Pedidos Hoje</h2>
                         <ul className="space-y-4">
                             {stats.topDishes.map((dish, index) => (
-                                <li key={dish.name} className="flex items-center justify-between p-4 bg-zinc-800/50 rounded-xl hover:bg-zinc-800 transition-colors">
+                                <li
+                                    key={dish.name}
+                                    className="flex items-center justify-between p-4 rounded-xl transition-colors hover:opacity-80"
+                                    style={{
+                                        backgroundColor: settings?.cardBackgroundColor || 'rgba(24, 24, 27, 0.5)',
+                                        border: `1px solid ${settings?.textColor}20`,
+                                        color: settings?.textColor || '#ffffff'
+                                    }}
+                                >
                                     <div className="flex items-center gap-4">
                                         <span
-                                            className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg ${index > 0 ? (index === 1 ? 'bg-zinc-400 text-black' : index === 2 ? 'text-white' : 'bg-zinc-700 text-zinc-400') : 'text-black'
-                                                }`}
-                                            style={index === 0 ? { backgroundColor: settings?.primaryColor } : index === 2 ? { backgroundColor: settings?.secondaryColor } : {}}
+                                            className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg"
+                                            style={
+                                                index === 0
+                                                    ? { backgroundColor: settings?.primaryColor, color: '#ffffff' }
+                                                    : index === 1
+                                                        ? { backgroundColor: `${settings?.textColor}20`, color: settings?.textColor || '#ffffff' }
+                                                        : index === 2
+                                                            ? { backgroundColor: settings?.secondaryColor, color: '#ffffff' }
+                                                            : { backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.05))', color: settings?.textColor || '#ffffff' }
+                                            }
                                         >
                                             {index + 1}
                                         </span>
-                                        <span className="text-white font-medium text-lg">{dish.name}</span>
+                                        <span className="font-medium text-lg" style={{ color: settings?.textColor || '#ffffff' }}>{dish.name}</span>
                                     </div>
-                                    <span className="font-medium" style={{ color: 'var(--menu-text-secondary)' }}>{dish.count} pedidos</span>
+                                    <span className="font-medium" style={{ color: settings?.textColor || '#a1a1aa', opacity: 0.7 }}>{dish.count} pedidos</span>
                                 </li>
                             ))}
                         </ul>

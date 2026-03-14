@@ -43,7 +43,10 @@ export function FloatingCart({ onCheckout, alertMessage }: FloatingCartProps) {
                 <div className="relative">
                     <FiShoppingCart className="w-6 h-6" />
                     {itemCount > 0 && (
-                        <span className="absolute -top-2 -right-2 bg-white text-zinc-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        <span
+                            className="absolute -top-2 -right-2 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
+                            style={{ backgroundColor: 'var(--menu-primary-contrast, #fff)', color: 'var(--menu-primary, #18181b)' }}
+                        >
                             {itemCount}
                         </span>
                     )}
@@ -102,7 +105,7 @@ export function FloatingCart({ onCheckout, alertMessage }: FloatingCartProps) {
                         ) : (
                             <ul className="space-y-4">
                                 {items.map((item) => (
-                                    <li key={item.dishId} className="bg-white/5 rounded-xl p-4 border border-white/5">
+                                    <li key={item.dishId} className="rounded-xl p-4" style={{ backgroundColor: 'var(--menu-hover-overlay)', border: '1px solid var(--menu-border-subtle)' }}>
                                         <div className="flex gap-4">
                                             {/* Image */}
                                             {item.imageUrl && (

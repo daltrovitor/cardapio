@@ -162,11 +162,11 @@ export default function EditDishPage({ params }: { params: Promise<{ id: string 
                 <div className="card space-y-6 rounded-2xl p-6 border border-gray-700" style={{ backgroundColor: settings?.cardBackgroundColor || 'transparent' }}>
                     {/* Image Upload */}
                     <div>
-                        <label className="block text-sm font-medium mb-2" style={{ color: 'var(--menu-text, #fff)', opacity: 0.8 }}>
+                        <label className="block text-sm font-medium mb-2" style={{ color: settings?.textColor || '#ffffff', opacity: 0.8 }}>
                             Imagem do Prato
                         </label>
                         <div className="flex items-start gap-4">
-                            <div className="w-32 h-32 rounded-lg flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}>
+                            <div className="w-32 h-32 rounded-lg flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'var(--menu-hover-overlay, rgba(255,255,255,0.05))' }}>
                                 {imagePreview || currentImageUrl ? (
                                     <img
                                         src={imagePreview || currentImageUrl!}
@@ -177,8 +177,8 @@ export default function EditDishPage({ params }: { params: Promise<{ id: string 
                                     <span className="text-4xl">🍽️</span>
                                 )}
                             </div>
-                            <label className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg cursor-pointer transition-colors hover:opacity-80" style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}>
-                                <div className="flex flex-col items-center gap-2" style={{ color: 'var(--menu-text, #fff)', opacity: 0.6 }}>
+                            <label className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg cursor-pointer transition-colors hover:opacity-80" style={{ backgroundColor: 'var(--menu-hover-overlay, rgba(0,0,0,0.05))', border: `1px solid ${settings?.textColor}20` }}>
+                                <div className="flex flex-col items-center gap-2" style={{ color: settings?.textColor || '#ffffff', opacity: 0.6 }}>
                                     <FaUpload className="w-8 h-8" />
                                     <span className="text-sm">Clique para alterar</span>
                                 </div>
@@ -194,15 +194,17 @@ export default function EditDishPage({ params }: { params: Promise<{ id: string 
 
                     {/* Name */}
                     <div>
-                        <label className="block text-sm font-medium mb-2" style={{ color: 'var(--menu-text, #fff)', opacity: 0.8 }}>
+                        <label className="block text-sm font-medium mb-2" style={{ color: settings?.textColor || '#ffffff', opacity: 0.8 }}>
                             Nome *
                         </label>
                         <input
                             type="text"
                             {...register('name')}
-                            className="w-full rounded-lg border border-gray-600 p-3 bg-transparent transition-colors focus:outline-none focus:ring-0"
+                            className="w-full rounded-lg p-3 transition-colors focus:outline-none focus:ring-0"
                             style={{
-                                color: settings?.textColor || '#fff',
+                                backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))',
+                                color: settings?.textColor || '#ffffff',
+                                border: `1px solid ${settings?.textColor}30`,
                                 outlineColor: settings?.primaryColor || '#f59e0b'
                             }}
                             placeholder="Ex: Filé Mignon ao Molho Madeira"
@@ -214,15 +216,17 @@ export default function EditDishPage({ params }: { params: Promise<{ id: string 
 
                     {/* Description */}
                     <div>
-                        <label className="block text-sm font-medium mb-2" style={{ color: 'var(--menu-text, #fff)', opacity: 0.8 }}>
+                        <label className="block text-sm font-medium mb-2" style={{ color: settings?.textColor || '#ffffff', opacity: 0.8 }}>
                             Descrição *
                         </label>
                         <textarea
                             {...register('description')}
                             rows={3}
-                            className="w-full rounded-lg border border-gray-600 p-3 bg-transparent transition-colors focus:outline-none focus:ring-0"
+                            className="w-full rounded-lg p-3 transition-colors focus:outline-none focus:ring-0"
                             style={{
-                                color: settings?.textColor || '#fff',
+                                backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))',
+                                color: settings?.textColor || '#ffffff',
+                                border: `1px solid ${settings?.textColor}30`,
                                 outlineColor: settings?.primaryColor || '#f59e0b'
                             }}
                             placeholder="Descreva os ingredientes e preparo do prato"
@@ -235,17 +239,19 @@ export default function EditDishPage({ params }: { params: Promise<{ id: string 
                     {/* Price and Category */}
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--menu-text, #fff)', opacity: 0.8 }}>
+                            <label className="block text-sm font-medium mb-2" style={{ color: settings?.textColor || '#ffffff', opacity: 0.8 }}>
                                 Preço (R$) *
                             </label>
                             <input
                                 type="number"
                                 step="0.01"
                                 {...register('price')}
-                                className="w-full rounded-lg border border-gray-600 p-3 bg-transparent transition-colors focus:ring-2 focus:ring-opacity-50"
+                                className="w-full rounded-lg p-3 transition-colors focus:outline-none focus:ring-0"
                                 style={{
-                                    color: 'var(--menu-text, #fff)',
-                                    outlineColor: 'var(--menu-primary, #f59e0b)'
+                                    backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))',
+                                    color: settings?.textColor || '#ffffff',
+                                    border: `1px solid ${settings?.textColor}30`,
+                                    outlineColor: settings?.primaryColor || '#f59e0b'
                                 }}
                                 placeholder="0,00"
                             />
@@ -255,20 +261,22 @@ export default function EditDishPage({ params }: { params: Promise<{ id: string 
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--menu-text, #fff)', opacity: 0.8 }}>
+                            <label className="block text-sm font-medium mb-2" style={{ color: settings?.textColor || '#ffffff', opacity: 0.8 }}>
                                 Categoria *
                             </label>
                             <select
                                 {...register('categoryId')}
-                                className="w-full rounded-lg border border-gray-600 p-3 bg-transparent transition-colors focus:ring-2 focus:ring-opacity-50"
+                                className="w-full rounded-lg p-3 transition-colors focus:outline-none focus:ring-0"
                                 style={{
-                                    color: 'var(--menu-text, #fff)',
-                                    outlineColor: 'var(--menu-primary, #f59e0b)'
+                                    backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))',
+                                    color: settings?.textColor || '#ffffff',
+                                    border: `1px solid ${settings?.textColor}30`,
+                                    outlineColor: settings?.primaryColor || '#f59e0b'
                                 }}
                             >
-                                <option value="" style={{ color: 'black' }}>Selecione...</option>
+                                <option value="" style={{ color: 'var(--card-text, #18181b)' }}>Selecione...</option>
                                 {categories.map(category => (
-                                    <option key={category.$id} value={category.$id} style={{ color: 'black' }}>
+                                    <option key={category.$id} value={category.$id} style={{ color: 'var(--card-text, #18181b)' }}>
                                         {category.name}
                                     </option>
                                 ))}
@@ -281,22 +289,41 @@ export default function EditDishPage({ params }: { params: Promise<{ id: string 
 
                     {/* Available */}
                     <div className="flex items-center gap-3">
-                        <input
-                            type="checkbox"
-                            {...register('available')}
-                            id="available"
-                            className="form-checkbox h-5 w-5 rounded border-gray-600 bg-transparent transition duration-150 ease-in-out focus:ring-0 focus:ring-offset-0"
-                            style={{
-                                color: settings?.primaryColor || '#f59e0b',
-                            }}
-                        />
-                        <label htmlFor="available" style={{ color: 'var(--menu-text, #fff)', opacity: 0.8 }}>
+                        <label className="relative flex cursor-pointer items-center rounded-full p-2" htmlFor="available">
+                            <input
+                                type="checkbox"
+                                {...register('available')}
+                                id="available"
+                                className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:opacity-0 before:transition-opacity focus:outline-none focus:ring-0"
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: `2px solid ${settings?.primaryColor || '#f59e0b'}`,
+                                }}
+                            />
+                            <div className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100 flex items-center justify-center w-full h-full rounded-md" style={{ backgroundColor: settings?.primaryColor }}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-3.5 w-3.5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    stroke="currentColor"
+                                    strokeWidth="1"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clipRule="evenodd"
+                                    ></path>
+                                </svg>
+                            </div>
+                        </label>
+                        <label htmlFor="available" style={{ color: settings?.textColor || '#ffffff', opacity: 0.8 }} className="cursor-pointer">
                             Prato disponível
                         </label>
                     </div>
 
                     {/* Submit */}
-                    <div className="flex justify-end gap-4 pt-4 border-t border-zinc-800">
+                    <div className="flex justify-end gap-4 pt-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
                         <Link href="/admin" className="btn btn-secondary">
                             Cancelar
                         </Link>

@@ -90,14 +90,14 @@ export function TableSelector({
                     >
                         Selecione sua Mesa
                     </h1>
-                    <p className="text-zinc-500 text-lg max-w-md mx-auto">
+                    <p style={{ color: 'var(--menu-text-muted, #71717a)' }} className="text-lg max-w-md mx-auto">
                         Escolha a mesa onde você está sentado para iniciar seu pedido
                     </p>
                 </div>
 
                 {/* Customer Name Input */}
                 <div className="mb-8 max-w-md mx-auto">
-                    <label className="block text-sm font-medium text-zinc-400 mb-2">
+                    <label className="block text-sm font-medium mb-2" style={{ color: 'var(--menu-text-muted, #a1a1aa)' }}>
                         Seu nome (opcional)
                     </label>
                     <input
@@ -105,9 +105,11 @@ export function TableSelector({
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
                         placeholder="Digite seu nome..."
-                        className="w-full px-4 py-3 bg-zinc-900/50 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:outline-none transition-all"
+                        className="w-full px-4 py-3 border rounded-xl placeholder-current/50 focus:outline-none transition-all"
                         style={{
-                            borderColor: customerName ? primaryColor : undefined,
+                            backgroundColor: 'var(--menu-surface, rgba(24,24,27,0.5))',
+                            borderColor: customerName ? primaryColor : 'var(--menu-border-subtle, #3f3f46)',
+                            color: 'var(--menu-text, #fff)',
                             boxShadow: customerName ? `0 0 0 2px ${primaryColor}20` : undefined
                         }}
                     />
@@ -123,10 +125,10 @@ export function TableSelector({
                                 onClick={() => setSelectedTable(table)}
                                 className="relative group p-6 rounded-2xl border-2 transition-all duration-300 transform hover:scale-105"
                                 style={{
-                                    borderColor: isSelected ? primaryColor : '#3f3f46',
+                                    borderColor: isSelected ? primaryColor : 'var(--menu-border-subtle, #3f3f46)',
                                     background: isSelected
                                         ? `linear-gradient(to bottom right, ${primaryColor}20, ${secondaryColor}20)`
-                                        : 'rgba(24, 24, 27, 0.5)',
+                                        : 'var(--menu-surface, rgba(24,24,27,0.5))',
                                     boxShadow: isSelected ? `0 10px 40px ${primaryColor}20` : undefined
                                 }}
                             >
@@ -141,11 +143,11 @@ export function TableSelector({
                                 <div className="text-center">
                                     <div
                                         className="text-3xl font-bold mb-2 transition-colors"
-                                        style={{ color: isSelected ? primaryColor : '#ffffff' }}
+                                        style={{ color: isSelected ? primaryColor : 'var(--menu-text, #fff)' }}
                                     >
                                         {table.number}
                                     </div>
-                                    <div className="flex items-center justify-center gap-1 text-zinc-500 text-sm">
+                                    <div className="flex items-center justify-center gap-1 text-sm" style={{ color: 'var(--menu-text-muted, #71717a)' }}>
                                         <FiUsers className="w-4 h-4" />
                                         <span>{table.seats} lugares</span>
                                     </div>
@@ -168,9 +170,9 @@ export function TableSelector({
                 </div>
 
                 {tables.length === 0 && (
-                    <div className="text-center py-12 bg-zinc-900/50 rounded-2xl border border-zinc-800">
-                        <FiMapPin className="w-12 h-12 text-zinc-600 mx-auto mb-4" />
-                        <p className="text-zinc-500">Nenhuma mesa disponível no momento</p>
+                    <div className="text-center py-12 rounded-2xl" style={{ backgroundColor: 'var(--menu-surface, rgba(24,24,27,0.5))', border: '1px solid var(--menu-border-subtle)' }}>
+                        <FiMapPin className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--menu-text-muted, #52525b)' }} />
+                        <p style={{ color: 'var(--menu-text-muted, #71717a)' }}>Nenhuma mesa disponível no momento</p>
                     </div>
                 )}
 

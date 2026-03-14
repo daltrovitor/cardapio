@@ -42,24 +42,27 @@ export function DishCardOrder({ dish, showPrices = true, showImages = true }: Di
     // Card inativo/indisponível
     if (!dish.available) {
         return (
-            <div className="flex flex-col h-full rounded-2xl bg-white shadow-sm opacity-60 relative overflow-hidden">
-                <div className="relative h-32 md:h-40 w-full bg-[#3F3E43] shrink-0">
+            <div
+                className="flex flex-col h-full rounded-2xl shadow-sm opacity-60 relative overflow-hidden"
+                style={{ backgroundColor: 'var(--card-bg, #ffffff)', borderRadius: 'var(--card-radius, 1rem)' }}
+            >
+                <div className="relative h-32 md:h-40 w-full shrink-0" style={{ backgroundColor: '#3F3E43' }}>
                     {showImages && imageUrl ? (
                         <Image src={imageUrl} alt={dish.name} fill className="object-cover grayscale" />
                     ) : (
-                        <div className="flex items-center justify-center h-full text-white/20">
+                        <div className="flex items-center justify-center h-full" style={{ color: 'rgba(255,255,255,0.2)' }}>
                             <FiPlus className="rotate-45 w-8 h-8" />
                         </div>
                     )}
-                    <div className="absolute inset-0 bg-white/10 flex items-center justify-center z-10">
-                        <span className="bg-zinc-800 text-white px-3 py-1 rounded-full text-xs font-medium">Indisponível</span>
+                    <div className="absolute inset-0 flex items-center justify-center z-10" style={{ backgroundColor: 'rgba(0,0,0,0.2)' }}>
+                        <span className="px-3 py-1 rounded-full text-xs font-medium" style={{ backgroundColor: 'var(--menu-primary, #18181b)', color: 'var(--menu-primary-contrast, #fff)' }}>Indisponível</span>
                     </div>
                 </div>
-                <div className="p-3 md:p-4 flex flex-col flex-1">
-                    <h3 className="font-serif font-semibold text-black text-sm md:text-base leading-tight mb-2 line-clamp-2">
+                <div className="p-3 md:p-4 flex flex-col flex-1" style={{ backgroundColor: 'var(--card-bg, #ffffff)' }}>
+                    <h3 className="font-serif font-semibold text-sm md:text-base leading-tight mb-2 line-clamp-2" style={{ color: 'var(--card-text, #000000)' }}>
                         {dish.name}
                     </h3>
-                    <p className="font-serif text-[#666] text-sm mt-auto">
+                    <p className="font-serif text-sm mt-auto" style={{ color: 'var(--card-text-secondary, #666666)' }}>
                         {showPrices ? formatPrice(dish.price) : '-'}
                     </p>
                 </div>
@@ -69,7 +72,7 @@ export function DishCardOrder({ dish, showPrices = true, showImages = true }: Di
 
     return (
         <div
-            className="flex flex-col h-full rounded-2xl bg-white shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden relative group"
+            className="flex flex-col h-full shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden relative group"
             style={{
                 backgroundColor: 'var(--card-bg, #ffffff)',
                 borderRadius: 'var(--card-radius, 1rem)'
@@ -100,7 +103,10 @@ export function DishCardOrder({ dish, showPrices = true, showImages = true }: Di
                     </div>
 
                     {quantityInCart > 0 && (
-                        <div className="absolute top-2 left-2 bg-black text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-md z-10">
+                        <div
+                            className="absolute top-2 left-2 text-[10px] font-bold px-2 py-1 rounded-md shadow-md z-10"
+                            style={{ backgroundColor: 'var(--menu-primary, #000)', color: 'var(--menu-primary-contrast, #fff)' }}
+                        >
                             {quantityInCart} no pedido
                         </div>
                     )}
@@ -108,19 +114,19 @@ export function DishCardOrder({ dish, showPrices = true, showImages = true }: Di
             )}
 
             {/* Content Body */}
-            <div className="flex-1 flex flex-col p-3 md:p-4 justify-between bg-white">
+            <div className="flex-1 flex flex-col p-3 md:p-4 justify-between" style={{ backgroundColor: 'var(--card-bg, #ffffff)' }}>
 
                 {/* Title */}
                 <h3
-                    className="font-serif font-medium text-black text-sm md:text-base leading-snug mb-2 line-clamp-2"
+                    className="font-serif font-medium text-sm md:text-base leading-snug mb-2 line-clamp-2"
                     style={{ color: 'var(--card-text, #000000)' }}
                 >
                     {dish.name}
                 </h3>
 
-                {/* Description - REINSERIDA */}
+                {/* Description */}
                 <p
-                    className="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed"
+                    className="text-xs line-clamp-2 mb-4 leading-relaxed"
                     style={{ color: 'var(--card-text-secondary, #666666)' }}
                 >
                     {dish.description}
@@ -129,29 +135,35 @@ export function DishCardOrder({ dish, showPrices = true, showImages = true }: Di
                 {/* Bottom Section: Price left, Button right */}
                 <div className="flex items-end justify-between mt-auto">
                     {showPrices && (
-                        <span className="font-serif text-[#666] text-sm md:text-base mb-1">
+                        <span className="font-serif text-sm md:text-base mb-1" style={{ color: 'var(--card-price-color, #666666)' }}>
                             {formatPrice(dish.price)}
                         </span>
                     )}
 
                     {isAdding ? (
-                        <div className="flex items-center bg-black rounded-lg p-0.5 gap-1 animate-in fade-in zoom-in duration-200">
+                        <div
+                            className="flex items-center rounded-lg p-0.5 gap-1 animate-in fade-in zoom-in duration-200"
+                            style={{ backgroundColor: 'var(--card-btn-bg, #000)' }}
+                        >
                             <button
                                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                className="w-6 h-6 flex items-center justify-center text-white hover:text-gray-300 font-bold"
+                                className="w-6 h-6 flex items-center justify-center font-bold"
+                                style={{ color: 'var(--card-btn-text, #fff)' }}
                             >
                                 -
                             </button>
-                            <span className="text-white text-xs font-bold w-4 text-center">{quantity}</span>
+                            <span className="text-xs font-bold w-4 text-center" style={{ color: 'var(--card-btn-text, #fff)' }}>{quantity}</span>
                             <button
                                 onClick={() => setQuantity(quantity + 1)}
-                                className="w-6 h-6 flex items-center justify-center text-white hover:text-gray-300 font-bold"
+                                className="w-6 h-6 flex items-center justify-center font-bold"
+                                style={{ color: 'var(--card-btn-text, #fff)' }}
                             >
                                 +
                             </button>
                             <button
                                 onClick={handleAddToCart}
-                                className="w-6 h-6 flex items-center justify-center bg-white/20 rounded text-white hover:bg-white/30 ml-0.5"
+                                className="w-6 h-6 flex items-center justify-center rounded ml-0.5"
+                                style={{ backgroundColor: 'rgba(255,255,255,0.2)', color: 'var(--card-btn-text, #fff)' }}
                             >
                                 <FiCheck size={12} />
                             </button>
@@ -159,7 +171,8 @@ export function DishCardOrder({ dish, showPrices = true, showImages = true }: Di
                     ) : (
                         <button
                             onClick={() => setIsAdding(true)}
-                            className="bg-black hover:bg-zinc-800 text-white w-8 h-8 rounded-lg flex items-center justify-center transition-colors shadow-sm"
+                            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors shadow-sm"
+                            style={{ backgroundColor: 'var(--card-btn-bg, #000)', color: 'var(--card-btn-text, #fff)' }}
                             aria-label="Adicionar"
                         >
                             <FiPlus size={16} />

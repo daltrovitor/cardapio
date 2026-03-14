@@ -122,7 +122,7 @@ button,
 
 .btn-primary {
   background: linear-gradient(to right, var(--menu-primary, #f59e0b), var(--menu-secondary, #ea580c));
-  color: white;
+  color: var(--menu-primary-contrast, white);
   transition: all 0.2s;
 }
 
@@ -132,7 +132,14 @@ button,
 }
 
 .btn-secondary {
-  @apply bg-white text-zinc-700 hover:bg-zinc-50 border border-zinc-200;
+  background-color: var(--card-bg, #ffffff);
+  color: var(--card-text, #374151);
+  border: 1px solid var(--menu-border-subtle, #e5e7eb);
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  opacity: 0.85;
 }
 
 .btn-danger {

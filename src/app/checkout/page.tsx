@@ -145,7 +145,7 @@ export default function CheckoutPage() {
     return (
         <div className="min-h-screen" style={{ backgroundColor: 'var(--menu-bg, #09090b)' }}>
             {/* Header */}
-            <header className="sticky top-0 z-30 backdrop-blur-lg border-b border-white/5" style={{ backgroundColor: 'rgba(var(--menu-bg-rgb), 0.95)' }}>
+            <header className="sticky top-0 z-30 backdrop-blur-lg" style={{ backgroundColor: 'var(--menu-bg, #09090b)', borderBottom: '1px solid var(--menu-border-subtle)' }}>
                 <div className="container mx-auto px-4 py-4 flex items-center gap-4">
                     <button
                         onClick={() => router.push('/menu')}
@@ -168,7 +168,7 @@ export default function CheckoutPage() {
                         <span className="w-8 h-8 rounded-full flex items-center justify-center text-sm" style={{ backgroundColor: 'rgba(var(--menu-primary-rgb), 0.2)', color: 'var(--menu-primary)' }}>1</span>
                         Resumo do Pedido
                     </h2>
-                    <div className="rounded-2xl border border-white/10 overflow-hidden" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                    <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid var(--menu-border-subtle)', backgroundColor: 'var(--menu-surface)' }}>
                         <ul className="divide-y divide-white/10">
                             {items.map(item => (
                                 <li key={item.dishId} className="p-4 flex gap-4">
@@ -207,7 +207,7 @@ export default function CheckoutPage() {
                         <span className="w-8 h-8 rounded-full flex items-center justify-center text-sm" style={{ backgroundColor: 'rgba(var(--menu-primary-rgb), 0.2)', color: 'var(--menu-primary)' }}>2</span>
                         Identificação (Opcional)
                     </h2>
-                    <div className="rounded-2xl border border-white/10 p-4" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                    <div className="rounded-2xl p-4" style={{ border: '1px solid var(--menu-border-subtle)', backgroundColor: 'var(--menu-surface)' }}>
                         <div className="relative">
                             <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50" style={{ color: 'var(--menu-text, #fff)' }} />
                             <input
@@ -227,7 +227,7 @@ export default function CheckoutPage() {
                         <span className="w-8 h-8 rounded-full flex items-center justify-center text-sm" style={{ backgroundColor: 'rgba(var(--menu-primary-rgb), 0.2)', color: 'var(--menu-primary)' }}>3</span>
                         Observações Gerais (Opcional)
                     </h2>
-                    <div className="rounded-2xl border border-white/10 p-4" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                    <div className="rounded-2xl p-4" style={{ border: '1px solid var(--menu-border-subtle)', backgroundColor: 'var(--menu-surface)' }}>
                         <div className="relative">
                             <FiMessageSquare className="absolute left-4 top-4 opacity-50" style={{ color: 'var(--menu-text, #fff)' }} />
                             <textarea
@@ -243,7 +243,7 @@ export default function CheckoutPage() {
                 </section>
 
                 {/* Total & Submit */}
-                <section className="sticky bottom-0 py-6 border-t border-white/10 -mx-4 px-4 shadow-[0_-5px_20px_rgba(0,0,0,0.5)]" style={{ backgroundColor: 'var(--menu-bg, #09090b)' }}>
+                <section className="sticky bottom-0 py-6 -mx-4 px-4 shadow-[0_-5px_20px_rgba(0,0,0,0.3)]" style={{ backgroundColor: 'var(--menu-bg, #09090b)', borderTop: '1px solid var(--menu-border-subtle)' }}>
                     <div className="flex items-center justify-between mb-4 container mx-auto max-w-2xl px-0">
                         <span className="text-lg opacity-60" style={{ color: 'var(--menu-text, #fff)' }}>Total do Pedido</span>
                         <span className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(to right, var(--menu-primary), var(--menu-secondary))' }}>

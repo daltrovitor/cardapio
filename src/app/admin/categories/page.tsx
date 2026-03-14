@@ -167,13 +167,14 @@ export default function CategoriesPage() {
             {showForm && (
                 <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
                     <div
-                        className="card w-full max-w-md animate-fade-in border border-gray-700 p-6 rounded-2xl"
+                        className="card w-full max-w-md animate-fade-in p-6 rounded-2xl"
                         style={{
-                            backgroundColor: settings?.cardBackgroundColor || '#18181b'
+                            backgroundColor: settings?.cardBackgroundColor || '#18181b',
+                            border: '1px solid var(--menu-border-subtle, #3f3f46)'
                         }}
                     >
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-xl font-bold text-white">
+                            <h2 className="text-xl font-bold" style={{ color: settings?.cardTextColor || '#ffffff' }}>
                                 {editingId ? 'Editar Categoria' : 'Nova Categoria'}
                             </h2>
                             <button
@@ -186,14 +187,20 @@ export default function CategoriesPage() {
 
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-zinc-300 mb-2">
+                                <label className="block text-sm font-medium mb-2" style={{ color: settings?.textColor || '#ffffff', opacity: 0.8 }}>
                                     Nome *
                                 </label>
                                 <input
                                     type="text"
                                     {...register('name')}
-                                    className="w-full rounded-lg border border-gray-600 p-3 bg-transparent text-white transition-colors focus:outline-none focus:ring-0"
+                                    className="w-full rounded-lg p-3 transition-colors focus:outline-none focus:ring-0"
                                     placeholder="Ex: Entradas"
+                                    style={{
+                                        backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))',
+                                        color: settings?.textColor || '#ffffff',
+                                        border: `1px solid ${settings?.textColor}30`,
+                                        outlineColor: settings?.primaryColor || '#f59e0b'
+                                    }}
                                 />
                                 {errors.name && (
                                     <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
@@ -201,14 +208,20 @@ export default function CategoriesPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-zinc-300 mb-2">
+                                <label className="block text-sm font-medium mb-2" style={{ color: settings?.textColor || '#ffffff', opacity: 0.8 }}>
                                     Descrição
                                 </label>
                                 <textarea
                                     {...register('description')}
                                     rows={2}
-                                    className="w-full rounded-lg border border-gray-600 p-3 bg-transparent text-white transition-colors focus:outline-none focus:ring-0"
+                                    className="w-full rounded-lg p-3 transition-colors focus:outline-none focus:ring-0"
                                     placeholder="Descrição opcional"
+                                    style={{
+                                        backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))',
+                                        color: settings?.textColor || '#ffffff',
+                                        border: `1px solid ${settings?.textColor}30`,
+                                        outlineColor: settings?.primaryColor || '#f59e0b'
+                                    }}
                                 />
                             </div>
 

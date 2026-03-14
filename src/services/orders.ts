@@ -260,15 +260,43 @@ export async function getOrdersByTable(tableNumber: number): Promise<Order[]> {
 export async function finalizeTable(tableNumber: number): Promise<void> {
     const supabase = getServiceSupabase()
 
-    // Update all non-cancelled orders for this table to paid
-    const { error } = await supabase
+    // Fetch all unpaid orders for this table first
+    const { data: unpaidOrders, error: fetchError } = await supabase
         .from('orders')
-        .update({ paid: true })
+        .select('id, status')
         .eq('table_number', tableNumber)
-        .neq('status', 'cancelled')
         .eq('paid', false)
 
-    if (error) throw error
+    if (fetchError) throw fetchError
+
+    if (!unpaidOrders || unpaidOrders.length === 0) return
+
+    const cancelledIds = unpaidOrders.filter(o => o.status === 'cancelled').map(o => o.id)
+    const activeIds = unpaidOrders.filter(o => o.status !== 'cancelled').map(o => o.id)
+
+    // Step 1: Mark active orders as paid and delivered
+    if (activeIds.length > 0) {
+        const { error: activeError } = await supabase
+            .from('orders')
+            .update({
+                paid: true,
+                status: 'delivered',
+                completed_at: new Date().toISOString()
+            })
+            .in('id', activeIds)
+
+        if (activeError) throw activeError
+    }
+
+    // Step 2: Mark cancelled orders as paid (so they disappear from customer history)
+    if (cancelledIds.length > 0) {
+        const { error: cancelledError } = await supabase
+            .from('orders')
+            .update({ paid: true })
+            .in('id', cancelledIds)
+
+        if (cancelledError) throw cancelledError
+    }
 }
 
 // ==================== MENU SETTINGS ====================
@@ -411,12 +439,15 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 export async function getReportsByDateRange(startDate: string, endDate: string): Promise<DailyReport[]> {
     const supabase = getServiceSupabase()
 
+    // Append end of day to endDate to ensure we include all orders for that day
+    const fullEndDate = `${endDate}T23:59:59.999Z`
+
     // Get orders in date range
     const { data: orders, error } = await supabase
         .from('orders')
         .select('*')
         .gte('created_at', startDate)
-        .lte('created_at', endDate)
+        .lte('created_at', fullEndDate)
         .order('created_at', { ascending: true })
 
     if (error) throw error

@@ -272,8 +272,8 @@ export default function AdminTablesPage() {
                 <div className="flex gap-3">
                     <button
                         onClick={fetchTables}
-                        className="flex items-center gap-2 px-4 py-2 bg-zinc-800 rounded-lg hover:text-white transition-colors"
-                        style={{ color: settings?.primaryColor || '#f59e0b' }}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors"
+                        style={{ backgroundColor: 'var(--menu-surface, #27272a)', color: settings?.primaryColor || '#f59e0b' }}
                     >
                         <FiRefreshCw className="w-4 h-4" />
                         Atualizar
@@ -310,7 +310,8 @@ export default function AdminTablesPage() {
                                 type="number"
                                 value={newTable.number}
                                 onChange={(e) => setNewTable(prev => ({ ...prev, number: parseInt(e.target.value) || 0 }))}
-                                className="w-full px-4 py-3 bg-zinc-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                                className="w-full px-4 py-3 rounded-xl transition-colors focus:outline-none focus:ring-0"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))', color: 'var(--menu-text, #ffffff)', border: '1px solid var(--menu-border-subtle, #3f3f46)', outlineColor: settings?.primaryColor || '#f59e0b' }}
                             />
                         </div>
                         <div>
@@ -322,7 +323,8 @@ export default function AdminTablesPage() {
                                 value={newTable.name}
                                 onChange={(e) => setNewTable(prev => ({ ...prev, name: e.target.value }))}
                                 placeholder="Ex: Mesa VIP, Varanda..."
-                                className="w-full px-4 py-3 bg-zinc-800 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                                className="w-full px-4 py-3 rounded-xl transition-colors focus:outline-none focus:ring-0"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))', color: 'var(--menu-text, #ffffff)', border: '1px solid var(--menu-border-subtle, #3f3f46)', outlineColor: settings?.primaryColor || '#f59e0b' }}
                             />
                         </div>
                         <div>
@@ -335,7 +337,8 @@ export default function AdminTablesPage() {
                                 onChange={(e) => setNewTable(prev => ({ ...prev, seats: parseInt(e.target.value) || 4 }))}
                                 min={1}
                                 max={20}
-                                className="w-full px-4 py-3 bg-zinc-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                                className="w-full px-4 py-3 rounded-xl transition-colors focus:outline-none focus:ring-0"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))', color: 'var(--menu-text, #ffffff)', border: '1px solid var(--menu-border-subtle, #3f3f46)', outlineColor: settings?.primaryColor || '#f59e0b' }}
                             />
                         </div>
                     </div>
@@ -375,7 +378,8 @@ export default function AdminTablesPage() {
                                 type="number"
                                 value={editingTable.number}
                                 onChange={(e) => setEditingTable({ ...editingTable, number: parseInt(e.target.value) || 0 })}
-                                className="w-full px-4 py-3 bg-zinc-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                                className="w-full px-4 py-3 rounded-xl transition-colors focus:outline-none focus:ring-0"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))', color: 'var(--menu-text, #ffffff)', border: '1px solid var(--menu-border-subtle, #3f3f46)', outlineColor: settings?.primaryColor || '#f59e0b' }}
                             />
                         </div>
                         <div>
@@ -387,7 +391,8 @@ export default function AdminTablesPage() {
                                 value={editingTable.name || ''}
                                 onChange={(e) => setEditingTable({ ...editingTable, name: e.target.value })}
                                 placeholder="Ex: Mesa VIP..."
-                                className="w-full px-4 py-3 bg-zinc-800 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                                className="w-full px-4 py-3 rounded-xl transition-colors focus:outline-none focus:ring-0"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))', color: 'var(--menu-text, #ffffff)', border: '1px solid var(--menu-border-subtle, #3f3f46)', outlineColor: settings?.primaryColor || '#f59e0b' }}
                             />
                         </div>
                         <div>
@@ -400,21 +405,23 @@ export default function AdminTablesPage() {
                                 onChange={(e) => setEditingTable({ ...editingTable, seats: parseInt(e.target.value) || 4 })}
                                 min={1}
                                 max={20}
-                                className="w-full px-4 py-3 bg-zinc-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                                className="w-full px-4 py-3 rounded-xl transition-colors focus:outline-none focus:ring-0"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))', color: 'var(--menu-text, #ffffff)', border: '1px solid var(--menu-border-subtle, #3f3f46)', outlineColor: settings?.primaryColor || '#f59e0b' }}
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-zinc-400 mb-2">
+                            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--menu-text-secondary)' }}>
                                 Status da Reserva
                             </label>
                             <select
                                 value={editingTable.status || 'available'}
                                 onChange={(e) => setEditingTable({ ...editingTable, status: e.target.value as any })}
-                                className="w-full px-4 py-3 bg-zinc-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                                className="w-full px-4 py-3 rounded-xl transition-colors focus:outline-none focus:ring-0"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.03))', color: 'var(--menu-text, #ffffff)', border: '1px solid var(--menu-border-subtle, #3f3f46)', outlineColor: settings?.primaryColor || '#f59e0b' }}
                             >
-                                <option value="available">Livre</option>
-                                <option value="occupied">Ocupada</option>
-                                <option value="reserved">Reservada</option>
+                                <option value="available" style={{ color: 'var(--card-text, #18181b)' }}>Livre</option>
+                                <option value="occupied" style={{ color: 'var(--card-text, #18181b)' }}>Ocupada</option>
+                                <option value="reserved" style={{ color: 'var(--card-text, #18181b)' }}>Reservada</option>
                             </select>
                         </div>
                     </div>
@@ -442,7 +449,7 @@ export default function AdminTablesPage() {
             )}
 
             {/* Tables Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start">
                 {tables.map(table => (
                     <div
                         key={table.id}
@@ -480,10 +487,10 @@ export default function AdminTablesPage() {
 
                         {/* Bill Total and Finalize */}
                         {tableTotals[table.number] > 0 && (
-                            <div className="mb-6 p-4 rounded-xl shadow-inner" style={{ backgroundColor: settings?.backgroundColor || '#09090b' }}>
-                                <p className="text-zinc-400 text-xs mb-1 uppercase tracking-wider font-bold">Total a Pagar</p>
+                            <div className="mb-6 p-4 rounded-xl shadow-inner" style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.05))', border: '1px solid var(--menu-border-subtle)' }}>
+                                <p className="text-xs mb-1 uppercase tracking-wider font-bold" style={{ color: settings?.textColor || '#a1a1aa', opacity: 0.6 }}>Total a Pagar</p>
                                 <div className="flex items-end justify-between">
-                                    <span className="text-2xl font-bold text-white">{formatPrice(tableTotals[table.number])}</span>
+                                    <span className="text-2xl font-bold" style={{ color: settings?.textColor || '#ffffff' }}>{formatPrice(tableTotals[table.number])}</span>
                                     <button
                                         onClick={() => handleFinalize(table.number)}
                                         disabled={finalizing === table.number}
@@ -503,21 +510,23 @@ export default function AdminTablesPage() {
                         <div className="flex gap-2">
                             <button
                                 onClick={() => setQrModalTable(table)}
-                                className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-zinc-800 rounded-lg hover:bg-zinc-700 hover:text-white transition-colors text-sm text-zinc-300"
+                                className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm hover:opacity-80"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.05))', color: settings?.textColor || '#ffffff' }}
                             >
                                 <FaQrcode className="w-4 h-4" />
                                 QR Code
                             </button>
                             <button
                                 onClick={() => setEditingTable(table)}
-                                className="p-2 bg-zinc-800 rounded-lg hover:bg-zinc-700 hover:text-white transition-colors"
-                                style={{ color: '#d4d4d8' }}
+                                className="p-2 rounded-lg transition-colors hover:opacity-80"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.05))', color: settings?.textColor || '#ffffff' }}
                             >
                                 <FiEdit2 className="w-4 h-4" />
                             </button>
                             <button
                                 onClick={() => setDeleteConfirmation(table.id)}
-                                className="p-2 bg-zinc-800 rounded-lg hover:bg-red-500/20 text-red-500 hover:text-red-400 transition-colors"
+                                className="p-2 rounded-lg hover:bg-red-500/20 text-red-500 hover:text-red-400 transition-colors"
+                                style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.05))' }}
                                 title="Excluir Mesa"
                             >
                                 <FiTrash2 className="w-4 h-4" />
@@ -561,15 +570,16 @@ export default function AdminTablesPage() {
                             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                             onClick={() => setQrModalTable(null)}
                         />
-                        <div className="relative bg-zinc-900 rounded-2xl p-6 max-w-md w-full animate-fade-in">
+                        <div className="relative rounded-2xl p-6 max-w-md w-full animate-fade-in" style={{ backgroundColor: settings?.cardBackgroundColor || 'rgba(24,24,27,0.95)' }}>
                             <button
                                 onClick={() => setQrModalTable(null)}
-                                className="absolute top-4 right-4 p-2 rounded-lg hover:bg-zinc-800 text-zinc-400"
+                                className="absolute top-4 right-4 p-2 rounded-lg hover:opacity-80"
+                                style={{ color: settings?.textColor || '#ffffff' }}
                             >
                                 <FiX className="w-5 h-5" />
                             </button>
                             {/* ... QR Code Content ... */}
-                            <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--menu-text)' }}>QR Code - Mesa {qrModalTable.number}</h2>
+                            <h2 className="text-xl font-bold mb-2" style={{ color: settings?.textColor || '#ffffff' }}>QR Code - Mesa {qrModalTable.number}</h2>
                             <div className="bg-white rounded-xl p-4 mb-4">
                                 <img
                                     src={generateQRCodeUrl(qrModalTable.number)}

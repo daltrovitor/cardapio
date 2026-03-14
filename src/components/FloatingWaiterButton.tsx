@@ -59,14 +59,16 @@ export function FloatingWaiterButton({ tableNumber, primaryColor, customerName }
                     <button
                         onClick={() => handleCall('bill')}
                         disabled={calling}
-                        className="flex items-center gap-3 px-6 py-3 bg-white text-zinc-900 rounded-xl shadow-xl font-medium hover:bg-zinc-50 transition-colors border border-zinc-200"
+                        className="flex items-center gap-3 px-6 py-3 rounded-xl shadow-xl font-medium transition-colors"
+                        style={{ backgroundColor: 'var(--card-bg, #fff)', color: 'var(--card-text, #18181b)', border: '1px solid var(--menu-border-subtle)' }}
                     >
                         <span>💳 Pedir a Conta</span>
                     </button>
                     <button
                         onClick={() => handleCall('assistance')}
                         disabled={calling}
-                        className="flex items-center gap-3 px-6 py-3 bg-white text-zinc-900 rounded-xl shadow-xl font-medium hover:bg-zinc-50 transition-colors border border-zinc-200"
+                        className="flex items-center gap-3 px-6 py-3 rounded-xl shadow-xl font-medium transition-colors"
+                        style={{ backgroundColor: 'var(--card-bg, #fff)', color: 'var(--card-text, #18181b)', border: '1px solid var(--menu-border-subtle)' }}
                     >
                         <span>🙋 Chamar Ajuda</span>
                     </button>

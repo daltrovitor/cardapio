@@ -7,7 +7,7 @@ interface MenuHeaderProps {
 
 export function MenuHeader({ restaurantName = 'Nosso Restaurante', logoUrl }: MenuHeaderProps) {
     return (
-        <header className="sticky top-0 z-40 backdrop-blur-xl bg-[var(--menu-bg)]/80 border-b border-white/5 transition-colors duration-300">
+        <header className="sticky top-0 z-40 backdrop-blur-xl transition-colors duration-300" style={{ backgroundColor: 'color-mix(in srgb, var(--menu-bg, #09090b) 80%, transparent)', borderBottom: '1px solid var(--menu-border-subtle, rgba(255,255,255,0.05))' }}>
             <div className="container mx-auto px-4 py-4 flex items-center justify-center">
                 <div className="flex items-center gap-3">
                     {logoUrl ? (

@@ -56,7 +56,8 @@ const ColorInput = ({ label, value, onChange }: { label: string, value: string, 
                 type="text"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="flex-1 px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white text-sm font-mono uppercase"
+                className="flex-1 px-3 py-2 rounded-lg text-sm font-mono uppercase focus:outline-none"
+                style={{ backgroundColor: 'var(--menu-surface)', color: 'var(--menu-text, #ffffff)', border: '1px solid var(--menu-border-subtle, #3f3f46)' }}
                 maxLength={7}
             />
         </div>
@@ -211,8 +212,8 @@ export default function AdminDesignPage() {
                                     type="text"
                                     value={settings.restaurantName}
                                     onChange={(e) => updateSetting('restaurantName', e.target.value)}
-                                    className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:outline-none"
-                                    style={{ borderColor: settings.primaryColor || '#f59e0b' }}
+                                    className="w-full px-4 py-3 rounded-xl focus:outline-none transition-colors"
+                                    style={{ backgroundColor: 'var(--menu-surface)', color: 'var(--menu-text, #ffffff)', border: `1px solid ${settings.primaryColor || 'var(--menu-border-subtle, #3f3f46)'}` }}
                                 />
                             </div>
 
@@ -238,7 +239,8 @@ export default function AdminDesignPage() {
                                     value={settings.welcomeMessage || ''}
                                     onChange={(e) => updateSetting('welcomeMessage', e.target.value)}
                                     rows={2}
-                                    className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:outline-none focus:border-amber-500 resize-none"
+                                    className="w-full px-4 py-3 rounded-xl focus:outline-none transition-colors resize-none"
+                                    style={{ backgroundColor: 'var(--menu-surface)', color: 'var(--menu-text, #ffffff)', border: `1px solid ${settings.primaryColor || 'var(--menu-border-subtle, #3f3f46)'}` }}
                                 />
                             </div>
                         </div>
@@ -291,7 +293,8 @@ export default function AdminDesignPage() {
                                     <select
                                         value={settings.cardBorderRadius}
                                         onChange={(e) => updateSetting('cardBorderRadius', e.target.value)}
-                                        className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:outline-none focus:border-amber-500"
+                                        className="w-full px-4 py-3 rounded-xl focus:outline-none transition-colors"
+                                        style={{ backgroundColor: 'var(--menu-surface)', color: 'var(--menu-text, #ffffff)', border: `1px solid ${settings.primaryColor || 'var(--menu-border-subtle, #3f3f46)'}` }}
                                     >
                                         <option value="small">Pequeno</option>
                                         <option value="medium">Médio</option>
@@ -306,7 +309,8 @@ export default function AdminDesignPage() {
                                     <select
                                         value={settings.cardSize}
                                         onChange={(e) => updateSetting('cardSize', e.target.value)}
-                                        className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:outline-none focus:border-amber-500"
+                                        className="w-full px-4 py-3 rounded-xl focus:outline-none transition-colors"
+                                        style={{ backgroundColor: 'var(--menu-surface)', color: 'var(--menu-text, #ffffff)', border: `1px solid ${settings.primaryColor || 'var(--menu-border-subtle, #3f3f46)'}` }}
                                     >
                                         <option value="compact">Compacto</option>
                                         <option value="normal">Normal</option>
@@ -337,7 +341,8 @@ export default function AdminDesignPage() {
                             <select
                                 value={settings.fontFamily}
                                 onChange={(e) => updateSetting('fontFamily', e.target.value)}
-                                className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white focus:outline-none focus:border-amber-500"
+                                className="w-full px-4 py-3 rounded-xl focus:outline-none transition-colors"
+                                style={{ backgroundColor: 'var(--menu-surface)', color: 'var(--menu-text, #ffffff)', border: `1px solid ${settings.primaryColor || 'var(--menu-border-subtle, #3f3f46)'}` }}
                             >
                                 {fontOptions.map(font => (
                                     <option key={font.value} value={font.value}>{font.label}</option>
@@ -480,9 +485,10 @@ export default function AdminDesignPage() {
                                                             R$ {29 + i},90
                                                         </p>
                                                         <div
-                                                            className="w-7 h-7 flex items-center justify-center text-white rounded-md"
+                                                            className="w-7 h-7 flex items-center justify-center rounded-md"
                                                             style={{
-                                                                backgroundColor: settings.primaryColor
+                                                                backgroundColor: settings.primaryColor,
+                                                                color: 'var(--card-btn-text, #fff)'
                                                             }}
                                                         >
                                                             <FiPlus className="w-4 h-4" />

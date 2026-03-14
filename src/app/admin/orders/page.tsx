@@ -184,8 +184,8 @@ export default function AdminOrdersPage() {
                 </div>
                 <button
                     onClick={fetchOrders}
-                    className="flex items-center gap-2 px-4 py-2 bg-zinc-800 rounded-lg transition-colors hover:text-white"
-                    style={{ color: settings?.primaryColor || '#f59e0b' }}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors"
+                    style={{ backgroundColor: 'var(--menu-surface, #27272a)', color: settings?.primaryColor || '#f59e0b' }}
                 >
                     <FiRefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                     Atualizar
@@ -210,14 +210,16 @@ export default function AdminOrdersPage() {
                         onClick={() => setFilter(tab.value)}
                         className={`px-4 py-2 rounded-lg font-medium transition-all`}
                         style={filter === tab.value
-                            ? { backgroundColor: settings?.primaryColor || '#f59e0b', color: '#ffffff' }
-                            : { backgroundColor: 'var(--card-bg)', color: 'var(--menu-text-secondary)' }
+                            ? { backgroundColor: settings?.primaryColor || '#f59e0b', color: 'var(--menu-primary-contrast, #ffffff)' }
+                            : { backgroundColor: 'var(--menu-surface, rgba(24, 24, 27, 0.5))', color: 'var(--menu-text-secondary, #a1a1aa)' }
                         }
                     >
                         {tab.label}
                         {tab.count > 0 && (
-                            <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${filter === tab.value ? 'bg-white/20' : 'bg-zinc-700'
-                                }`}>
+                            <span className={`ml-2 px-2 py-0.5 rounded-full text-xs`} style={{
+                                backgroundColor: filter === tab.value ? 'rgba(255, 255, 255, 0.2)' : 'var(--menu-overlay, rgba(255, 255, 255, 0.1))',
+                                color: filter === tab.value ? 'var(--menu-primary-contrast, #ffffff)' : 'var(--menu-text, #ffffff)'
+                            }}>
                                 {tab.count}
                             </span>
                         )}

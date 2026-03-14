@@ -9,10 +9,13 @@ import {
     FiTrendingDown,
     FiBarChart2,
     FiPieChart,
-    FiX
+    FiX,
+    FiDownload
 } from 'react-icons/fi'
 import { useMenuSettings } from '@/components/MenuThemeProvider'
 import type { DailyReport } from '@/types/orders'
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
 export default function AdminReportsPage() {
     const { settings } = useMenuSettings()
@@ -106,12 +109,84 @@ export default function AdminReportsPage() {
     // Calculate max revenue for chart scaling
     const maxRevenue = Math.max(...reports.map(r => r.totalRevenue), 1)
 
+    const downloadCSV = () => {
+        const headers = ['Data', 'Pedidos', 'Faturamento', 'Ticket Medio', 'Cancelados'];
+        const rows = reports.map(r => [
+            formatDate(r.reportDate),
+            r.totalOrders,
+            r.totalRevenue,
+            r.averageOrderValue,
+            r.cancelledOrders
+        ]);
+
+        const csvContent = [
+            headers.join(','),
+            ...rows.map(row => row.join(','))
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `relatorio_${dateRange.start}_a_${dateRange.end}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const downloadPDF = () => {
+        const doc = new jsPDF();
+        doc.text(`Relatorio de Vendas - ${dateRange.start} ate ${dateRange.end}`, 14, 15);
+        
+        const tableColumn = ["Data", "Pedidos", "Faturamento", "Ticket Medio", "Cancelados"];
+        const tableRows: any[] = [];
+
+        reports.forEach(r => {
+            const rowData = [
+                formatDate(r.reportDate),
+                r.totalOrders,
+                formatPrice(r.totalRevenue),
+                formatPrice(r.averageOrderValue),
+                r.cancelledOrders
+            ];
+            tableRows.push(rowData);
+        });
+
+        autoTable(doc, {
+            head: [tableColumn],
+            body: tableRows,
+            startY: 20,
+        });
+
+        doc.save(`relatorio_${dateRange.start}_a_${dateRange.end}.pdf`);
+    };
+
     return (
         <div className="space-y-8">
             {/* Header */}
-            <div>
-                <h1 className="text-3xl font-bold" style={{ color: settings?.textColor || '#ffffff' }}>Relatórios</h1>
-                <p className="mt-1" style={{ color: settings?.textColor || '#a1a1aa', opacity: 0.6 }}>Análise de vendas e pedidos</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold" style={{ color: settings?.textColor || '#ffffff' }}>Relatórios</h1>
+                    <p className="mt-1" style={{ color: settings?.textColor || '#a1a1aa', opacity: 0.6 }}>Análise de vendas e pedidos</p>
+                </div>
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={downloadCSV}
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl transition-colors text-sm font-medium hover:opacity-80 border"
+                        style={{ borderColor: settings?.primaryColor || '#f59e0b', color: settings?.primaryColor || '#f59e0b' }}
+                    >
+                        <FiDownload className="w-4 h-4" />
+                        Exportar CSV
+                    </button>
+                    <button
+                        onClick={downloadPDF}
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl transition-colors text-sm font-medium hover:opacity-80 text-white"
+                        style={{ backgroundColor: settings?.primaryColor || '#f59e0b' }}
+                    >
+                        <FiDownload className="w-4 h-4" />
+                        Exportar PDF
+                    </button>
+                </div>
             </div>
 
             {/* Date Range Selector */}
@@ -130,13 +205,14 @@ export default function AdminReportsPage() {
                             <button
                                 key={option.value}
                                 onClick={() => setQuickDateRange(option.value)}
-                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${quickRange === option.value
-                                    ? 'text-white'
-                                    : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
-                                    }`}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all`}
                                 style={quickRange === option.value ? {
-                                    backgroundColor: settings?.primaryColor || '#f59e0b'
-                                } : {}}
+                                    backgroundColor: settings?.primaryColor || '#f59e0b',
+                                    color: 'var(--menu-primary-contrast, #ffffff)'
+                                } : {
+                                    backgroundColor: 'var(--menu-surface, #27272a)',
+                                    color: 'var(--menu-text-secondary, #a1a1aa)'
+                                }}
                             >
                                 {option.label}
                             </button>
@@ -145,22 +221,22 @@ export default function AdminReportsPage() {
 
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2">
-                            <FiCalendar className="w-4 h-4 text-zinc-500" />
+                            <FiCalendar className="w-4 h-4" style={{ color: 'var(--menu-text-secondary, #a1a1aa)' }} />
                             <input
                                 type="date"
                                 value={dateRange.start}
                                 onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
-                                className="px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-sm"
-                                style={{ color: 'var(--menu-text)' }}
+                                className="px-3 py-2 rounded-lg text-sm"
+                                style={{ backgroundColor: 'var(--menu-surface, #27272a)', borderColor: 'var(--menu-border-subtle, #3f3f46)', borderWidth: '1px', color: 'var(--menu-text)' }}
                             />
                         </div>
-                        <span className="text-zinc-500">até</span>
+                        <span style={{ color: 'var(--menu-text-secondary, #a1a1aa)' }}>até</span>
                         <input
                             type="date"
                             value={dateRange.end}
                             onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
-                            className="px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-sm"
-                            style={{ color: 'var(--menu-text)' }}
+                            className="px-3 py-2 rounded-lg text-sm"
+                            style={{ backgroundColor: 'var(--menu-surface, #27272a)', borderColor: 'var(--menu-border-subtle, #3f3f46)', borderWidth: '1px', color: 'var(--menu-text)' }}
                         />
                     </div>
                 </div>
@@ -357,8 +433,8 @@ export default function AdminReportsPage() {
             {/* Daily Table */}
             <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: settings?.cardBackgroundColor || 'rgba(24, 24, 27, 0.5)' }}>
                 <div className="p-6">
-                    <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-                        <FiPieChart className="w-5 h-5 text-amber-400" />
+                    <h2 className="text-xl font-semibold flex items-center gap-2" style={{ color: 'var(--menu-text, #ffffff)' }}>
+                        <FiPieChart className="w-5 h-5" style={{ color: settings?.primaryColor || '#f59e0b' }} />
                         Detalhamento por Dia
                     </h2>
                 </div>
@@ -376,12 +452,12 @@ export default function AdminReportsPage() {
                         </thead>
                         <tbody>
                             {reports.map(report => (
-                                <tr key={report.reportDate} className="hover:bg-zinc-800/30">
-                                    <td className="px-6 py-4 text-white font-medium">{formatDate(report.reportDate)}</td>
-                                    <td className="px-6 py-4 text-right text-zinc-400">{report.totalOrders}</td>
-                                    <td className="px-6 py-4 text-right text-amber-400 font-medium">{formatPrice(report.totalRevenue)}</td>
-                                    <td className="px-6 py-4 text-right text-zinc-400">{formatPrice(report.averageOrderValue)}</td>
-                                    <td className="px-6 py-4 text-right text-red-400">{report.cancelledOrders}</td>
+                                <tr key={report.reportDate} className="transition-colors" style={{ borderTop: '1px solid var(--menu-border-subtle)' }}>
+                                    <td className="px-6 py-4 font-medium" style={{ color: 'var(--menu-text, #ffffff)' }}>{formatDate(report.reportDate)}</td>
+                                    <td className="px-6 py-4 text-right" style={{ color: 'var(--menu-text-muted, #a1a1aa)' }}>{report.totalOrders}</td>
+                                    <td className="px-6 py-4 text-right font-medium" style={{ color: settings?.primaryColor || '#f59e0b' }}>{formatPrice(report.totalRevenue)}</td>
+                                    <td className="px-6 py-4 text-right" style={{ color: 'var(--menu-text-muted, #a1a1aa)' }}>{formatPrice(report.averageOrderValue)}</td>
+                                    <td className="px-6 py-4 text-right" style={{ color: '#ef4444' }}>{report.cancelledOrders}</td>
                                 </tr>
                             ))}
                         </tbody>

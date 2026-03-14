@@ -154,7 +154,7 @@ function MenuContent() {
                 </div>
 
                 {/* Table Info Bar */}
-                <div className="sticky top-0 z-30 backdrop-blur-lg border-b border-white/5 bg-[var(--menu-bg)]/95">
+                <div className="sticky top-0 z-30 backdrop-blur-lg" style={{ borderBottom: '1px solid var(--menu-border-subtle)', backgroundColor: 'var(--menu-bg, #09090b)' }}>
                     <div className="container mx-auto px-4 py-3 flex items-center justify-between">
                         <button
                             onClick={() => router.push('/')}
@@ -197,9 +197,16 @@ function MenuContent() {
                                         key={category.$id}
                                         onClick={() => scrollToCategory(category.$id)}
                                         className={`w-full text-left px-4 py-3 rounded-xl transition-all ${activeCategory === category.$id
-                                            ? 'bg-[var(--menu-primary)]/10 text-[var(--menu-primary)] font-medium border-l-4 border-[var(--menu-primary)]'
-                                            : 'hover:bg-white/5 opacity-70 hover:opacity-100'
+                                            ? 'font-medium border-l-4'
+                                            : 'opacity-70 hover:opacity-100'
                                             }`}
+                                        style={activeCategory === category.$id ? {
+                                            backgroundColor: 'color-mix(in srgb, var(--menu-primary) 10%, transparent)',
+                                            color: 'var(--menu-primary)',
+                                            borderLeftColor: 'var(--menu-primary)'
+                                        } : {
+                                            color: 'var(--menu-text, #fff)'
+                                        }}
                                     >
                                         {category.name}
                                     </button>
@@ -213,10 +220,16 @@ function MenuContent() {
                                 <button
                                     key={category.$id}
                                     onClick={() => scrollToCategory(category.$id)}
-                                    className={`whitespace-nowrap px-4 py-2 rounded-full border border-white/10 transition-colors ${activeCategory === category.$id
-                                        ? 'bg-[var(--menu-primary)] text-white border-[var(--menu-primary)]'
-                                        : 'bg-white/5 hover:bg-white/10'
-                                        }`}
+                                    className={`whitespace-nowrap px-4 py-2 rounded-full transition-colors`}
+                                    style={activeCategory === category.$id ? {
+                                        backgroundColor: 'var(--menu-primary)',
+                                        color: 'var(--menu-primary-contrast, #fff)',
+                                        borderColor: 'var(--menu-primary)'
+                                    } : {
+                                        backgroundColor: 'var(--menu-hover-overlay)',
+                                        color: 'var(--menu-text, #fff)',
+                                        border: '1px solid var(--menu-border-subtle)'
+                                    }}
                                 >
                                     {category.name}
                                 </button>
@@ -269,7 +282,7 @@ function MenuContent() {
                     />
                 )}
 
-                <footer className="border-t border-black/5 dark:border-white/10 py-8 mt-auto bg-[var(--menu-bg)] opacity-90">
+                <footer className="py-8 mt-auto" style={{ borderTop: '1px solid var(--menu-border-subtle)', backgroundColor: 'var(--menu-bg)', opacity: 0.9 }}>
                     <div className="container mx-auto px-4 text-center opacity-70 text-sm">
                         <p>{settings?.footerText || `© ${new Date().getFullYear()} ${settings?.restaurantName || 'Sabores & Aromas'}. Todos os direitos reservados.`}</p>
                     </div>

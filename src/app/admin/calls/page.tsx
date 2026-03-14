@@ -138,7 +138,8 @@ export default function AdminCallsPage() {
                 </div>
                 <button
                     onClick={fetchCalls}
-                    className="p-3 bg-zinc-800 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
+                    className="p-3 rounded-xl transition-colors hover:opacity-80"
+                    style={{ backgroundColor: 'var(--menu-surface)', color: 'var(--menu-text)' }}
                 >
                     <FiRefreshCw className="w-5 h-5" />
                 </button>
@@ -146,8 +147,8 @@ export default function AdminCallsPage() {
 
             {calls.length === 0 ? (
                 <div className="rounded-2xl p-12 flex flex-col items-center justify-center text-center max-w-2xl mx-auto" style={{ backgroundColor: settings?.cardBackgroundColor || 'rgba(24, 24, 27, 0.5)' }}>
-                    <div className="p-6 bg-zinc-800/50 rounded-full mb-6">
-                        <FiBell className="w-12 h-12" style={{ color: settings?.textColor || '#52525b' }} />
+                    <div className="p-6 rounded-full mb-6" style={{ backgroundColor: 'var(--menu-surface)' }}>
+                        <FiBell className="w-12 h-12" style={{ color: 'var(--menu-text)' }} />
                     </div>
                     <h2 className="text-xl font-semibold mb-2" style={{ color: settings?.textColor || '#ffffff' }}>Sem chamados pendentes</h2>
                     <p className="text-zinc-500">Tudo tranquilo! Todos os clientes foram atendidos.</p>
@@ -170,14 +171,14 @@ export default function AdminCallsPage() {
                                         style={call.status === 'acknowledged' ? {
                                             backgroundColor: `${settings?.primaryColor}1A`,
                                         } : {
-                                            backgroundColor: '#27272a', // zinc-800
+                                            backgroundColor: 'var(--menu-surface)', // instead of zinc-800
                                         }}
                                     >
                                         <span
                                             className="text-xs uppercase font-bold tracking-wider"
                                             style={call.status === 'acknowledged' ? { color: settings?.primaryColor } : { color: '#9ca3af' }}
                                         >Mesa</span>
-                                        <div className="text-2xl font-bold text-white text-center">{call.tableNumber}</div>
+                                        <div className="text-2xl font-bold text-center" style={{ color: settings?.textColor || '#ffffff' }}>{call.tableNumber}</div>
                                     </div>
                                     <div>
                                         <span
@@ -206,8 +207,8 @@ export default function AdminCallsPage() {
                                 {call.status !== 'completed' && (
                                     <button
                                         onClick={() => handleUpdateStatus(call.id, 'completed', call.tableNumber)}
-                                        className="p-3 bg-zinc-800 rounded-xl transition-all hover:scale-110"
-                                        style={{ color: settings?.primaryColor || '#4ade80' }}
+                                        className="p-3 rounded-xl transition-all hover:scale-110 flex items-center justify-center"
+                                        style={{ backgroundColor: 'var(--menu-surface)', color: settings?.primaryColor || '#4ade80' }}
                                         title="Concluir atendimento"
                                     >
                                         <FiCheck className="w-6 h-6" />
@@ -219,12 +220,12 @@ export default function AdminCallsPage() {
                                 {call.customerName && (
                                     <div className="mb-2">
                                         <p className="text-xs text-zinc-500 uppercase font-bold">Cliente</p>
-                                        <p className="text-white font-medium">{call.customerName}</p>
+                                        <p className="font-medium" style={{ color: settings?.textColor || '#ffffff' }}>{call.customerName}</p>
                                     </div>
                                 )}
                                 {call.notes && (
-                                    <div className="bg-zinc-800/50 p-3 rounded-lg mb-4">
-                                        <p className="text-zinc-300 italic text-sm">"{call.notes}"</p>
+                                    <div className="p-3 rounded-lg mb-4" style={{ backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.05))' }}>
+                                        <p className="italic text-sm" style={{ color: settings?.textColor || '#d4d4d8', opacity: 0.8 }}>"{call.notes}"</p>
                                     </div>
                                 )}
                                 {call.status === 'acknowledged' && (
@@ -238,19 +239,19 @@ export default function AdminCallsPage() {
                             {call.status === 'pending' ? (
                                 <button
                                     onClick={() => handleUpdateStatus(call.id, 'acknowledged', call.tableNumber)}
-                                    className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-3 bg-zinc-800 text-zinc-300 font-medium rounded-xl hover:text-white transition-all shadow-lg group-hover:text-white"
+                                    className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-3 font-medium rounded-xl transition-all shadow-lg hover:opacity-90"
                                     style={{
-                                        // We can't use hover:bg-dynamic easily, but we can set a bg that matches partially
-                                        // or just rely on global CSS variables if available. 
-                                        // For now let's just use inline style for non-hover, and maybe a border.
-                                        borderWidth: '1px',
-                                        borderColor: 'transparent'
+                                        backgroundColor: 'var(--menu-surface, rgba(0,0,0,0.05))',
+                                        color: settings?.textColor || '#ffffff',
+                                        border: `1px solid ${settings?.primaryColor}40`
                                     }}
                                     onMouseEnter={(e) => {
                                         e.currentTarget.style.backgroundColor = settings?.primaryColor || '#f59e0b'
+                                        e.currentTarget.style.color = '#ffffff'
                                     }}
                                     onMouseLeave={(e) => {
-                                        e.currentTarget.style.backgroundColor = '#27272a' // zinc-800
+                                        e.currentTarget.style.backgroundColor = 'var(--menu-surface, rgba(0,0,0,0.05))'
+                                        e.currentTarget.style.color = settings?.textColor || '#ffffff'
                                     }}
                                 >
                                     <FiCheck className="w-5 h-5" />
@@ -260,9 +261,13 @@ export default function AdminCallsPage() {
                                 <button
                                     onClick={() => handleUpdateStatus(call.id, 'completed', call.tableNumber)}
                                     className={`w-full mt-4 flex items-center justify-center gap-2 px-4 py-3 font-medium rounded-xl transition-all shadow-lg text-white ${call.type === 'bill'
-                                        ? 'bg-green-600 hover:bg-green-700'
-                                        : 'bg-zinc-700 hover:bg-zinc-600'
+                                        ? 'bg-emerald-600 hover:bg-emerald-700'
+                                        : 'hover:opacity-90'
                                         }`}
+                                    style={call.type !== 'bill' ? {
+                                        backgroundColor: settings?.primaryColor || '#f59e0b',
+                                        color: '#ffffff'
+                                    } : undefined}
                                 >
                                     {call.type === 'bill' ? <FiDollarSign className="w-5 h-5" /> : <FiCheck className="w-5 h-5" />}
                                     {call.type === 'bill' ? 'Conta Paga / Finalizar' : 'Finalizar Atendimento'}

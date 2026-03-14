@@ -136,7 +136,7 @@ export default function CustomerOrdersPage() {
     return (
         <div className="min-h-screen" style={{ backgroundColor: 'var(--menu-bg, #09090b)' }}>
             {/* Header */}
-            <header className="sticky top-0 z-30 backdrop-blur-lg border-b border-white/5" style={{ backgroundColor: 'rgba(var(--menu-bg-rgb), 0.95)' }}>
+            <header className="sticky top-0 z-30 backdrop-blur-lg" style={{ backgroundColor: 'var(--menu-bg, #09090b)', borderBottom: '1px solid var(--menu-border-subtle)' }}>
                 <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <button
@@ -153,8 +153,8 @@ export default function CustomerOrdersPage() {
                     </div>
                     <button
                         onClick={fetchOrders}
-                        className="p-2 rounded-lg hover:bg-white/10 transition-colors"
-                        style={{ color: 'var(--menu-text, #fff)', backgroundColor: 'rgba(255,255,255,0.05)' }}
+                        className="p-2 rounded-lg transition-colors"
+                        style={{ color: 'var(--menu-text, #fff)', backgroundColor: 'var(--menu-hover-overlay)' }}
                     >
                         <FiRefreshCw className="w-5 h-5" />
                     </button>
@@ -187,12 +187,12 @@ export default function CustomerOrdersPage() {
                     </h2>
 
                     {activeOrders.length === 0 ? (
-                        <div className="rounded-2xl border border-white/10 p-8 text-center" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                        <div className="rounded-2xl p-8 text-center" style={{ backgroundColor: 'var(--menu-surface)', border: '1px solid var(--menu-border-subtle)' }}>
                             <p className="opacity-60" style={{ color: 'var(--menu-text, #fff)' }}>Nenhum pedido ativo</p>
                             <button
                                 onClick={() => router.push('/menu')}
                                 className="mt-4 px-4 py-2 text-white rounded-lg transition-colors"
-                                style={{ backgroundColor: 'var(--menu-primary, #f59e0b)' }}
+                                style={{ backgroundColor: 'var(--menu-primary, #f59e0b)', color: 'var(--menu-primary-contrast, #fff)' }}
                             >
                                 Fazer um Pedido
                             </button>
@@ -202,8 +202,8 @@ export default function CustomerOrdersPage() {
                             {activeOrders.map(order => {
                                 const isMyOrder = myOrderIds.includes(order.id)
                                 return (
-                                    <li key={order.id} className={`rounded-2xl border border-white/10 overflow-hidden ${isMyOrder ? 'ring-1 ring-offset-1 ring-offset-transparent' : ''}`} style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderColor: isMyOrder ? 'var(--menu-primary)' : 'rgba(255,255,255,0.1)' }}>
-                                        <div className="p-4 border-b border-white/5 flex items-center justify-between">
+                                    <li key={order.id} className={`rounded-2xl overflow-hidden ${isMyOrder ? 'ring-1 ring-offset-1 ring-offset-transparent' : ''}`} style={{ backgroundColor: 'var(--menu-surface)', border: '1px solid var(--menu-border-subtle)', borderColor: isMyOrder ? 'var(--menu-primary)' : undefined }}>
+                                        <div className="p-4 flex items-center justify-between" style={{ borderBottom: '1px solid var(--menu-border-subtle)' }}>
                                             <div>
                                                 <span className="text-sm opacity-60" style={{ color: 'var(--menu-text, #fff)' }}>{formatDate(order.createdAt)}</span>
                                                 {order.customerName && (
@@ -232,7 +232,7 @@ export default function CustomerOrdersPage() {
                                             ))}
                                         </ul>
 
-                                        <div className="p-4 bg-black/20 flex items-center justify-between">
+                                        <div className="p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--menu-hover-overlay)' }}>
                                             <span className="opacity-60" style={{ color: 'var(--menu-text, #fff)' }}>Total</span>
                                             <span className="text-lg font-bold" style={{ color: 'var(--menu-primary, #f59e0b)' }}>{formatPrice(order.total)}</span>
                                         </div>
@@ -251,7 +251,7 @@ export default function CustomerOrdersPage() {
                         </h2>
                         <ul className="space-y-4">
                             {completedOrders.slice(0, 5).map(order => (
-                                <li key={order.id} className="rounded-2xl border border-white/5 p-4 opacity-70 hover:opacity-100 transition-opacity" style={{ backgroundColor: 'rgba(255,255,255,0.01)' }}>
+                                <li key={order.id} className="rounded-2xl p-4 opacity-70 hover:opacity-100 transition-opacity" style={{ backgroundColor: 'var(--menu-surface)', border: '1px solid var(--menu-border-subtle)' }}>
                                     <div className="flex items-center justify-between">
                                         <div>
                                             <span className="text-sm opacity-60" style={{ color: 'var(--menu-text, #fff)' }}>{formatDate(order.createdAt)}</span>

@@ -32,7 +32,7 @@ export function MenuCategoryOrder({
                     {category.name}
                 </h2>
                 {category.description && (
-                    <p className="text-zinc-400">{category.description}</p>
+                    <p style={{ color: 'var(--menu-text-muted, #a1a1aa)' }}>{category.description}</p>
                 )}
                 <div
                     className="mt-3 h-1 w-20 rounded-full"
