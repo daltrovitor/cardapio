@@ -494,7 +494,10 @@ export default function AdminTablesPage() {
                                     <button
                                         onClick={() => handleFinalize(table.number)}
                                         disabled={finalizing === table.number}
-                                        className="flex items-center gap-2 px-3 py-1.5 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50"
+                                        className="flex items-center gap-2 px-3 py-2 text-white text-sm font-bold rounded-xl transition-all shadow-md active:scale-95 disabled:opacity-50"
+                                        style={{ 
+                                            background: `linear-gradient(to right, ${settings?.primaryColor || '#f59e0b'}, ${settings?.secondaryColor || '#ea580c'})`
+                                        }}
                                     >
                                         {finalizing === table.number ? (
                                             <FiRefreshCw className="w-4 h-4 animate-spin" />
@@ -570,27 +573,38 @@ export default function AdminTablesPage() {
                             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                             onClick={() => setQrModalTable(null)}
                         />
-                        <div className="relative rounded-2xl p-6 max-w-md w-full animate-fade-in" style={{ backgroundColor: settings?.cardBackgroundColor || 'rgba(24,24,27,0.95)' }}>
+                        <div className="relative rounded-2xl p-8 max-w-md w-full animate-fade-in shadow-2xl overflow-hidden" 
+                             style={{ 
+                                 backgroundColor: settings?.cardBackgroundColor || '#18181b',
+                                 border: '1px solid var(--menu-border-subtle)' 
+                             }}>
+                            
+                            <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full opacity-5" 
+                                 style={{ backgroundColor: settings?.primaryColor || '#f59e0b' }} />
+                                 
                             <button
                                 onClick={() => setQrModalTable(null)}
-                                className="absolute top-4 right-4 p-2 rounded-lg hover:opacity-80"
+                                className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/5 transition-colors"
                                 style={{ color: settings?.textColor || '#ffffff' }}
                             >
                                 <FiX className="w-5 h-5" />
                             </button>
-                            {/* ... QR Code Content ... */}
-                            <h2 className="text-xl font-bold mb-2" style={{ color: settings?.textColor || '#ffffff' }}>QR Code - Mesa {qrModalTable.number}</h2>
-                            <div className="bg-white rounded-xl p-4 mb-4">
-                                <img
-                                    src={generateQRCodeUrl(qrModalTable.number)}
-                                    alt={`QR Code Mesa ${qrModalTable.number}`}
-                                    className="w-full aspect-square"
-                                />
-                            </div>
-                            <div className="flex gap-3">
+                            
+                            <div className="relative">
+                                <h2 className="text-2xl font-bold mb-1" style={{ color: settings?.textColor || '#ffffff' }}>Mesa {qrModalTable.number}</h2>
+                                <p className="text-sm opacity-60 mb-6" style={{ color: settings?.textColor || '#ffffff' }}>QR Code para acesso direto</p>
+                                
+                                <div className="bg-white rounded-2xl p-6 mb-6 shadow-inner ring-8 ring-white/5">
+                                    <img
+                                        src={generateQRCodeUrl(qrModalTable.number)}
+                                        alt={`QR Code Mesa ${qrModalTable.number}`}
+                                        className="w-full aspect-square"
+                                    />
+                                </div>
+                                
                                 <button
                                     onClick={() => downloadQRCode(qrModalTable.number)}
-                                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 text-white rounded-xl transition-all"
+                                    className="w-full flex items-center justify-center gap-2 px-6 py-4 text-white font-bold rounded-xl transition-all shadow-lg active:scale-[0.98]"
                                     style={{
                                         background: `linear-gradient(to right, ${settings?.primaryColor || '#f59e0b'}, ${settings?.secondaryColor || '#ea580c'})`
                                     }}
@@ -612,25 +626,33 @@ export default function AdminTablesPage() {
                             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                             onClick={() => setDeleteConfirmation(null)}
                         />
-                        <div className="relative bg-zinc-900 rounded-2xl p-6 max-w-sm w-full animate-fade-in shadow-2xl shadow-red-500/10">
-                            <div className="flex flex-col items-center text-center">
-                                <div className="bg-red-500/10 rounded-xl p-4 flex items-center gap-3 justify-center mb-4">
-                                    <FiAlertTriangle className="w-6 h-6 text-red-500" />
+                        <div className="relative rounded-2xl p-8 max-w-sm w-full animate-fade-in shadow-2xl overflow-hidden"
+                            style={{ 
+                                backgroundColor: settings?.cardBackgroundColor || '#18181b',
+                                border: '1px solid rgba(239, 68, 68, 0.2)' 
+                            }}>
+                            
+                            <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-red-500/10" />
+
+                            <div className="relative flex flex-col items-center text-center">
+                                <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20">
+                                    <FiAlertTriangle className="w-8 h-8 text-red-500" />
                                 </div>
-                                <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--menu-text)' }}>Excluir Mesa?</h3>
-                                <p className="mb-6" style={{ color: 'var(--menu-text-secondary)' }}>
+                                <h3 className="text-2xl font-bold mb-3" style={{ color: settings?.textColor || '#ffffff' }}>Excluir Mesa?</h3>
+                                <p className="mb-8 text-sm leading-relaxed" style={{ color: 'var(--menu-text-secondary)' }}>
                                     Tem certeza que deseja excluir esta mesa? Esta ação não pode ser desfeita e removerá o histórico associado.
                                 </p>
                                 <div className="flex gap-3 w-full">
                                     <button
                                         onClick={() => setDeleteConfirmation(null)}
-                                        className="flex-1 px-4 py-2 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-colors"
+                                        className="flex-1 px-4 py-3 font-medium transition-all rounded-xl border border-transparent hover:bg-white/5"
+                                        style={{ color: settings?.textColor || '#ffffff', background: 'rgba(255,255,255,0.05)' }}
                                     >
-                                        Cancelar
+                                        Voltar
                                     </button>
                                     <button
                                         onClick={executeDelete}
-                                        className="flex-1 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors"
+                                        className="flex-1 px-4 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-500/20 active:scale-95"
                                     >
                                         Excluir
                                     </button>
@@ -648,29 +670,64 @@ export default function AdminTablesPage() {
                             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                             onClick={() => setFinalizeConfirmation(null)}
                         />
-                        <div className="relative bg-zinc-900 rounded-2xl p-6 max-w-sm w-full animate-fade-in shadow-2xl shadow-emerald-500/10">
-                            <div className="flex flex-col items-center text-center">
-                                <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mb-4">
-                                    <FiDollarSign className="w-6 h-6 text-emerald-500" />
+                        <div className="relative rounded-2xl p-8 max-w-sm w-full animate-fade-in shadow-2xl overflow-hidden"
+                            style={{
+                                backgroundColor: settings?.cardBackgroundColor || '#18181b',
+                                border: '1px solid var(--menu-border-subtle)'
+                            }}>
+                            {/* Decorative background element */}
+                            <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-10"
+                                style={{ backgroundColor: settings?.primaryColor || '#f59e0b' }} />
+
+                            <div className="relative flex flex-col items-center text-center">
+                                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg transform rotate-3"
+                                    style={{
+                                        background: `linear-gradient(135deg, ${settings?.primaryColor || '#f59e0b'}20, ${settings?.secondaryColor || '#ea580c'}20)`,
+                                        border: '1px solid var(--menu-border-subtle)'
+                                    }}>
+                                    <FiDollarSign className="w-8 h-8" style={{ color: settings?.primaryColor || '#f59e0b' }} />
                                 </div>
-                                <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--menu-text)' }}>Finalizar Mesa {finalizeConfirmation}?</h3>
-                                <p className="mb-6" style={{ color: 'var(--menu-text-secondary)' }}>
-                                    Confirma o pagamento total de <strong style={{ color: 'var(--menu-text)' }}>{formatPrice(tableTotals[finalizeConfirmation] || 0)}</strong>? Esta ação limpará os pedidos da mesa.
+
+                                <h3 className="text-2xl font-bold mb-3" style={{ color: settings?.textColor || '#ffffff' }}>
+                                    Finalizar Mesa {finalizeConfirmation}
+                                </h3>
+
+                                <div className="mb-6 p-4 rounded-xl w-full" style={{ backgroundColor: 'var(--menu-surface)' }}>
+                                    <p className="text-sm opacity-60 mb-1" style={{ color: settings?.textColor || '#ffffff' }}>Total em aberto</p>
+                                    <div className="text-3xl font-black bg-clip-text text-transparent"
+                                        style={{ backgroundImage: `linear-gradient(to right, ${settings?.primaryColor || '#f59e0b'}, ${settings?.secondaryColor || '#ea580c'})` }}>
+                                        {formatPrice(tableTotals[finalizeConfirmation] || 0)}
+                                    </div>
+                                </div>
+
+                                <p className="mb-8 text-sm leading-relaxed" style={{ color: 'var(--menu-text-secondary)' }}>
+                                    Deseja confirmar o pagamento? Esta ação irá liberar a mesa e arquivar os pedidos atuais.
                                 </p>
+
                                 <div className="flex gap-3 w-full">
                                     <button
                                         onClick={() => setFinalizeConfirmation(null)}
-                                        className="flex-1 px-4 py-2 bg-zinc-800 text-white rounded-xl hover:bg-zinc-700 transition-colors"
+                                        className="flex-1 px-4 py-3 font-medium transition-all rounded-xl border border-transparent hover:bg-white/5"
+                                        style={{ color: settings?.textColor || '#ffffff', background: 'rgba(255,255,255,0.05)' }}
                                     >
                                         Cancelar
                                     </button>
                                     <button
                                         onClick={executeFinalize}
                                         disabled={finalizing !== null}
-                                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-50"
+                                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 font-bold text-white rounded-xl transition-all shadow-lg shadow-amber-500/20 active:scale-95 disabled:opacity-50"
+                                        style={{
+                                            background: `linear-gradient(to right, ${settings?.primaryColor || '#f59e0b'}, ${settings?.secondaryColor || '#ea580c'})`
+                                        }}
                                     >
-                                        {finalizing === finalizeConfirmation ? <FiRefreshCw className="w-4 h-4 animate-spin" /> : <FiCheck className="w-4 h-4" />}
-                                        Confirmar
+                                        {finalizing === finalizeConfirmation ? (
+                                            <FiRefreshCw className="w-5 h-5 animate-spin" />
+                                        ) : (
+                                            <>
+                                                <FiCheck className="w-5 h-5" />
+                                                Confirmar
+                                            </>
+                                        )}
                                     </button>
                                 </div>
                             </div>
