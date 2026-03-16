@@ -6,8 +6,9 @@ export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url)
         const status = searchParams.get('status') || undefined
+        const tableNumber = searchParams.get('tableNumber') ? parseInt(searchParams.get('tableNumber')!) : undefined
 
-        const orders = await getOrders(status)
+        const orders = await getOrders(status, tableNumber)
         return NextResponse.json(orders)
     } catch (error) {
         console.error('Error fetching orders:', error)

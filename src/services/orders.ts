@@ -110,7 +110,7 @@ export async function createOrder(input: CreateOrderInput): Promise<Order> {
     }
 }
 
-export async function getOrders(status?: string): Promise<Order[]> {
+export async function getOrders(status?: string, tableNumber?: number): Promise<Order[]> {
     const supabase = getServiceSupabase()
     let query = supabase
         .from('orders')
@@ -126,6 +126,10 @@ export async function getOrders(status?: string): Promise<Order[]> {
         } else {
             query = query.eq('status', status)
         }
+    }
+
+    if (tableNumber) {
+        query = query.eq('table_number', tableNumber)
     }
 
     const { data, error } = await query
